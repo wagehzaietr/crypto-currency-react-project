@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import Coins from "./Coins";
 import Axios from "Axios";
 import { CardHolder, Loader } from "./Coins.styled";
+import Nav from "../Navbar/Nav";
+
 const ApiUrl = "https://api.coinstats.app/public/v1/coins?skip=0";
 
 const CoinsApi = () => {
   const [listOfCoins, setListOfCoins] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchWord, setsearchword] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -17,13 +20,16 @@ const CoinsApi = () => {
       }
     );
   }, []);
+  const filteredCoins = listOfCoins.filter((coin) => {
+    return coin.name.toLowerCase().includes(searchWord.toLowerCase());
+  });
 
   if (loading) {
     return (
       <Loader className="loader">
-        <div class="loader">
-          <span class="loader-text">loading</span>
-          <span class="load"></span>
+        <div className="loader">
+          <span className="loader-text">loading</span>
+          <span className="load"></span>
         </div>
       </Loader>
     );
@@ -31,8 +37,9 @@ const CoinsApi = () => {
 
   return (
     <>
+      <Nav setsearchword={setsearchword} />
       <CardHolder>
-        {listOfCoins.map((coin) => {
+        {filteredCoins.map((coin) => {
           return (
             <Coins
               name={coin.name}
