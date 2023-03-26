@@ -1,11 +1,14 @@
 import React from 'react'
-
+import Nav from './Nav'
+import { Container } from 'react-bootstrap'
 
 
 
 const Navbar = () => {
   return (
-    <div>Navbar</div>
+    <Container>
+    <Nav/>
+    </Container>
   )
 }
 
